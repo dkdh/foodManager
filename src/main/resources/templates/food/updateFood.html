@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>음식리스트 업데이트</title>
+</head>
+<body>
+    <h3>음식 업데이트 화면</h3>
+    
+    <form th:object="${updateFoodForm}" th:action="@{'/foods/updateFood/' + ${foodId}}" method="post">
+    	음식 이름:<input type="text" name="text" th:field="*{foodName}" /><br />
+    	카테고리:<input type="text" name="text" th:field="*{category}" /><br />
+    	수량:<input type="text" name="text" th:field="*{foodName}" /><br />
+    	유통기한:<input type="text" name="text" th:field="*{expirationDate}" /><br />
+    	
+    	<div>
+    		<button type="submit">입력</button>
+    	</div>
+    </form>
+    <table>
+    <tr>
+    <th>음식이름</th>
+    </tr>
+    <tr th:each="food : ${foods}">
+    <td><span th:text="${food.foodName}"/></span></td>
+    </tr>
+    </table>
+</body>
+</html>
