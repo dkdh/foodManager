@@ -8,6 +8,8 @@ import foodmanager.domain.mapper.FoodMapper;
 import foodmanager.domain.model.Food;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +19,20 @@ public class FoodService{
 	FoodMapper foodMapper;
 	
 	public List<Food> findAllFoods(){
-		return foodMapper.findAll();
+		Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails)principal;
+		
+		String userName= userDetails.getUsername();
+		
+		return foodMapper.findAll(userName);
 	}
 	
 	public List<Food> findExpiredFoods(){
-		List<Food> foodsEx=foodMapper.findAll();
+		Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails)principal;
+		
+		String userName= userDetails.getUsername();
+		List<Food> foodsEx=foodMapper.findAll(userName);
 		LocalDate today = LocalDate.now();
 		for(int i=0;i<foodsEx.size();i++) {
 			if (today.isBefore(foodsEx.get(i).getExpirationDate())) {
@@ -40,6 +51,11 @@ public class FoodService{
 	}
 	*/
 	public void saveFood(Food food) {
+		Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails)principal;
+		
+		String userName= userDetails.getUsername();
+		food.setUserName(userName);
 		foodMapper.saveFood(food);
 	}
 

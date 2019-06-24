@@ -54,7 +54,7 @@ public class UpdateFoodController{
 		
 		Food food = new Food();
 		//System.out.println(foodId);
-		food.setUserName("dkdm");
+		//food.setUserName("dkdm");
 		food.setFoodName(form.getFoodName());
 		food.setCategory(form.getCategory());
 		food.setNum(form.getNum());

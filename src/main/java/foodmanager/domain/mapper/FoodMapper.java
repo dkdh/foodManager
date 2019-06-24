@@ -13,8 +13,8 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface FoodMapper{
 	//모든 음식에 대한 리스트 반환 //이따 뒤에 WHERE userId=#{userId} 추가 그리고 인자 추가userId
-	@Select("SELECT * FROM food ORDER by foodId")
-	List<Food> findAll();
+	@Select("SELECT * FROM food WHERE userName=#{userName} ORDER by foodId")
+	List<Food> findAll(String userName);
 
 	//음식 db에 추가
 	@Insert("INSERT INTO food(userName, foodName, category, expirationDate, num) VALUES(#{userName},#{foodName},#{category},#{expirationDate},#{num})")

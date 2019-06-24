@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import foodmanager.domain.mapper.RecipeMapper;
@@ -19,14 +21,20 @@ public class RecipeService {
 	@Autowired
 	FoodMapper foodMapper;
 	
+
 	public List<Recipe> findAllRecipes(){
 		return recipeMapper.findAll();
 	}
 	
 	public List<Recipe> findAbleRecipes(){
+		Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails)principal;
+		
+		String userName= userDetails.getUsername();
+		
 		List<Recipe> recipes = findAllRecipes();
 		List<Recipe> recipesAble = new LinkedList<>();
-		List<Food> foods=foodMapper.findAll();
+		List<Food> foods=foodMapper.findAll(userName);
 		
 		for(int i =0;i<recipes.size();i++) {
 			int count=0;

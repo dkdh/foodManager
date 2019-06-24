@@ -22,7 +22,7 @@ body {
 <h1 style="text-align: center;">Domestic Food Manager</h1>
 
 <div style="text-align: left;">
-	<button style="width: 60pt; height: 25pt; font-size: 18px;" type="button" onclick="history.back();"><strong>Back</strong></button>
+	<!-- <button style="width: 60pt; height: 25pt; font-size: 18px;" type="button" onclick="history.back();"><strong>Back</strong></button>-->
 	<br/>
 	<br/>
 </div>
@@ -67,5 +67,9 @@ body {
 		</tbody>
 	</table>
 </div>
+
+<form th:action="@{/logout}" method="post">
+	<button>로그아웃</button>
+</form>
 </body>
 </html>

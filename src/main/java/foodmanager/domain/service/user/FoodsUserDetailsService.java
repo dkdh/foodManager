@@ -1,5 +1,5 @@
 package foodmanager.domain.service.user;
-/*
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,17 +11,18 @@ import foodmanager.domain.model.User;
 
 @Service
 public class FoodsUserDetailsService implements UserDetailsService {
-	//UserMapper userMapper;
-	UserMapper userMapper = new UserMapper();
+	@Autowired
+	UserMapper userMapper;
 	
 	@Override
-	public UserDetails loadUserByUsername(String userIds) throws UsernameNotFoundException {
-		int userId = Integer.parseInt(userIds);
-		User user = userMapper.findOne(userId);
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+		User user = userMapper.findOne(userName);
+		
 		if(user==null) {
-			throw new UsernameNotFoundException(userIds+" is not found");
+			System.out.println("noooo");
+			throw new UsernameNotFoundException(userName+" is not found");
 		}
+
 		return new FoodsUserDetails(user);
 	}
 }
-*/

@@ -1,5 +1,5 @@
 package foodmanager;
-/*
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import foodmanager.domain.service.user.FoodsUserDetailsService;
@@ -21,13 +20,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		return new BCryptPasswordEncoder();
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests().antMatchers("/js/**","/css/**").permitAll()
-			//.antMatchers("/**").authenticated()
+			.antMatchers("/**").authenticated()
 			.and()
 			.formLogin()
 			.loginPage("/loginForm").loginProcessingUrl("/login")
@@ -36,16 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			.failureUrl("/loginForm?error=true")
 			.permitAll();
 	}
-	/*
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-		auth.inMemoryAuthentication().withUser("1").password("1234");
-	}
 	
 	@Override
 	protected void configure (AuthenticationManagerBuilder auth) throws Exception{
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-		//auth.inMemoryAuthentication().withUser("1").password("1234");
 	}
 }
-*/
