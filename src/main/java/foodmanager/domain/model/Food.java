@@ -1,14 +1,17 @@
 package foodmanager.domain.model;
 
-//import java.io.Serializable;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
-public class Food/* implements Serializable*/{
-	
+public class Food implements Serializable{
+
+	private static final long serialVersionUID = 539323480509110142L;
+
+	private String userName;
 	
 	private int foodId;
-	
+
 	private String foodName;
 	
 	private String category;
@@ -17,6 +20,14 @@ public class Food/* implements Serializable*/{
 	
 	private LocalDate expirationDate;
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
 	public int getFoodId() {
 		return foodId;
 	}

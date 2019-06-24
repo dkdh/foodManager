@@ -1,61 +1,31 @@
 package foodmanager.domain.mapper;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.time.LocalDate;
 
 import foodmanager.domain.model.Food;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
-//일단 class로. 지금은 실제 DB와의 연결없으니 과정 상 만든 거
-public class FoodMapper{
-	private List<Food> foods;
+@Mapper
+public interface FoodMapper{
+	//모든 음식에 대한 리스트 반환 //이따 뒤에 WHERE userId=#{userId} 추가 그리고 인자 추가userId
+	@Select("SELECT * FROM food ORDER by foodId")
+	List<Food> findAll();
+
+	//음식 db에 추가
+	@Insert("INSERT INTO food(userName, foodName, category, expirationDate, num) VALUES(#{userName},#{foodName},#{category},#{expirationDate},#{num})")
+	void saveFood(Food food);
 	
-	public FoodMapper() {
-		this.foods = new LinkedList<>();
-		List<String> foodName = new LinkedList<>();
-		List<Integer> foodId = new LinkedList<>();
-		List<String> category = new LinkedList<>();
-		List<Integer> num = new LinkedList<>();
-		List<LocalDate> expirationDate = new LinkedList<>();
-		
-		foodName.add("당근");
-		foodName.add("설탕");
-		foodId.add(0);
-		foodId.add(1);
-		category.add("기타");
-		category.add("설탕");
-		num.add(4);
-		num.add(150);
-		expirationDate.add(LocalDate.parse("2019-12-03"));
-		expirationDate.add(LocalDate.parse("2019-05-03"));
-		
-		for(int i =0;i<foodName.size();i++) {
-			Food a = new Food();
-			a.setFoodId(foodId.get(i));
-			a.setFoodName(foodName.get(i));
-			a.setCategory(category.get(i));
-			a.setNum(num.get(i));
-			a.setExpirationDate(expirationDate.get(i));
-			this.foods.add(a);
-		}
-	}	
+	//음식 db에서 수정
+	@Update("UPDATE food SET foodName=#{foodName}, num=#{num}, expirationDate=#{expirationDate}, category=#{category} WHERE foodId=#{foodId}")
+	void editFood(Food food);
 	
-	public List<Food> findAll() {
-		return this.foods;
-	}
-	
-	public Food findOne(Integer foodId) {
-		//foodId에 따라 DB에서 맞는 값을 꺼냄
-		
-		//일단 아무 값이나
-		Food a = new Food();
-		a.setFoodId(1);
-		a.setFoodName("딸기");
-		a.setCategory("딸기");
-		a.setNum(5);
-		a.setExpirationDate(LocalDate.parse("2010-10-10"));
-		return a;
-	}
+	//음식 삭제
+	@Delete("DELETE FROM food WHERE foodId = #{foodId}")
+	void deleteFood(int foodId);
 	
 }

@@ -3,8 +3,8 @@ package foodmanager.app.food;
 //import java.time.LocalDateTime;
 import java.util.List;
 
-import foodmanager.domain.service.food.FoodService;
 import foodmanager.domain.model.Food;
+import foodmanager.domain.service.food.FoodService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

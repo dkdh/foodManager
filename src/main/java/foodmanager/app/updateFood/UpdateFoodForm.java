@@ -10,6 +10,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 //입력 폼 클래스
 public class UpdateFoodForm {
 	
+	private int foodId;
+	
+	private String userName;
+	
 	@NotNull(message = "필수 입력 항목입니다.")
 	@Size(min = 1, max = 50)
 	private String foodName;
@@ -23,6 +27,22 @@ public class UpdateFoodForm {
 	@NotNull(message = "필수 입력 항목입니다.")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate expirationDate;
+
+	public int getFoodId() {
+		return foodId;
+	}
+
+	public void setFoodId(int foodId) {
+		this.foodId = foodId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public String getFoodName() {
 		return foodName;

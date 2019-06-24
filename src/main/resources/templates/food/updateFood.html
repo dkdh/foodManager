@@ -2,28 +2,76 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title>음식리스트 업데이트</title>
+<title>Update foods</title>
+<style>
+body {
+  background-color: black;
+  text-align: center;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+</style>
 </head>
 <body>
-    <h3>음식 업데이트 화면</h3>
+    <h2 style="text-align: center;">식품 목록 업데이트</h2>
     
-    <form th:object="${updateFoodForm}" th:action="@{'/foods/updateFood/' + ${foodId}}" method="post">
-    	음식 이름:<input type="text" name="text" th:field="*{foodName}" /><br />
-    	카테고리:<input type="text" name="text" th:field="*{category}" /><br />
-    	수량:<input type="text" name="text" th:field="*{foodName}" /><br />
-    	유통기한:<input type="text" name="text" th:field="*{expirationDate}" /><br />
-    	
-    	<div>
-    		<button type="submit">입력</button>
-    	</div>
-    </form>
-    <table>
-    <tr>
-    <th>음식이름</th>
-    </tr>
-    <tr th:each="food : ${foods}">
-    <td><span th:text="${food.foodName}"/></span></td>
-    </tr>
+    <div style="text-align: left;">
+		<button style="width: 60pt; height: 25pt; font-size: 18px;" type="button" onclick="location.href='/' "><strong>Back</strong></button><br /><br />
+	</div>
+    
+    <div th:each="food,index:${foods}">
+    <form th:object="${updateFoodForm}" th:action="@{'/foods/updateFood'}" method="post">
+    <table style="margin-left: auto; margin-right: auto;" border="1">
+    <tbody>
+        <tr th:if="${index.index}==0">
+    		<th>식품명</th>
+			<th>수량</th>
+			<th>종류</th>
+			<th>유통기한</th>
+			<th>수정</th>
+			<th>삭제</th>
+		</tr>
+		<tr >
+			<td><input type="text" th:value="${food.foodName}" id="foodName" name="foodName"></td>
+			<td><input style="width: 60px;" type="number" min="1" max="10000" th:value="${food.num}" id="num" name="num" /></td>
+			<td><input list="foodCategory" th:value="${food.category}" id="category" name="category"/></td>
+			<td><input type="date" th:value="${food.expirationDate}" id="expirationDate" name="expirationDate"/></td>
+    		<td style="display:none;"><input type="hidden" name="foodId" th:value="${food.foodId}" id="foodId"/></td>
+    		<td style="display:none;"><input type="hidden" name="userName" th:value="${food.userName}" id="userName"/></td>
+    		<td><button type="submit" name="edit">EDIT</button></td>
+    		<td><button type="submit" name="delete">DEL</button></td>    	
+    	</tr>
+    </tbody>
     </table>
+    </form>    
+    </div>
+    
+    <div style="line-height:2.3em">
+	<br/>
+	<br/>
+	<br/>
+	<form th:object="${updateFoodForm}" th:action="@{'/foods/updateFood'}" method="post">
+	<strong>식품명: </strong><input type="text" placeholder="Food name" th:field="*{foodName}" />
+	<br/>
+	<strong>수량: </strong><input id="rangeInput" type="range" min="1" max="10" oninput="amount.value=rangeInput.value" />
+	<input id="amount" type="number" th:field="*{num}" min="1" max="99" oninput="rangeInput.value=amount.value" />
+	<br/>
+	<strong>유형: </strong><input type="text" list="foodCategory" placeholder="Click to expand" th:field="*{category}"/>
+ 		<datalist id="foodCategory">
+			<option th:each="category:${categories}"  th:value="${category}">
+		</datalist> 
+	<br />
+	<strong>유통기한: </strong><input type="date" th:field="*{expirationDate}"/>
+	<br />
+	<button style="width: 120pt; height: 30pt; font-size: 18px;" type="submit" name="add"><strong>목록 추가</strong></button>
+	</form>
+	</div>
+	
+	<p
+		style="color:white"
+		th:if="${error != null}"
+		th:text="${error}"></p>
+    
+    
 </body>
 </html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+	<title>Recommended Recipes</title>
+<style>
+body {
+  background-color: black;
+  text-align: center;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+</style>
+</head>
+<body>
+<h1>Recommended Recipes</h1>
+<div style="text-align: left;">
+	<button style="width: 60pt; height: 25pt; font-size: 18px;" type="button" onclick="history.back();"><strong>Back</strong></button>
+	<br/>
+	<br/>
+</div>
+
+<div>
+<br />
+<br />
+<br />
+<table style="margin-left: auto; margin-right: auto;" border="10" width="600">
+	<tbody>
+		<tr>
+			<th>Recipe Name</th>
+			<th>재료</th>
+		</tr>
+		<tr th:each = "recipe, index:${recipes}">
+			<td><span th:text="${recipe.recipeName}"></span></td>
+			<!-- <td th:each="neededFood, index2:${neededFoods}" th:if="${index.index}==${index2.index}"> -->
+			<td><span th:text="${recipe.neededFood}"></span></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+</body>
+</html>
